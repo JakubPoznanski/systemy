@@ -38,6 +38,7 @@ int main(int argc,char *argv[])
       rr2 = ( (double) ir2 )/RAND_MAX;
       if (rr1*rr1 + rr2*rr2 <= 1.0)
 	np++;
+  
       // Wydruki kontrolne
       dlogi = log10(1.0*i);
       delta = dlogi - floor(dlogi);
