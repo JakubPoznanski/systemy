@@ -1,0 +1,8 @@
+------------------------Odpowiedzi na pytania-----------------------------
+
+Przy n-krotnym wywołaniu pętli procesów będzie 2^n. Ponieważ fork tworzy
+podproces dla każdego procesu. 
+pierwsze wywołanie mamy jeden proces ---> tworzy podproces suma(2)
+drugie wywołanie mamy 2 procesy ---> dla każdego tworzy podproces suma (4)
+itd.
+Procesów potomnych będzie zawsze 2^n-1 ponieważ jeden proces jest macierzysty. 
