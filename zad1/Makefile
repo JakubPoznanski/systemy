@@ -38,19 +38,19 @@ LD = $(CO)
 all: $(EXEC1) $(EXEC2) $(EXEC3) $(EXEC4) $(EXEC5)
 #############################
 $(EXEC1): $(OBJS1)
-	 $(LD) -o $@ $(LDFLAGS) $^
+	 $(LD) -o $@ $(LDFLAGS) $^ display.cpp
 #############################
 $(EXEC2): $(OBJS2)
-	 $(LD) -o $@ $(LDFLAGS) $^
+	 $(LD) -o $@ $(LDFLAGS) $^ display.cpp
 #############################
 $(EXEC3): $(OBJS3)
-	 $(LD) -o $@ $(LDFLAGS) $^
+	 $(LD) -o $@ $(LDFLAGS) $^ display.cpp
 #############################
 $(EXEC4): $(OBJS4)
-	 $(LD) -o $@ $(LDFLAGS) $^
+	 $(LD) -o $@ $(LDFLAGS) $^ display.cpp
 #############################
 $(EXEC5): $(OBJS5)
-	 $(LD) -o $@ $(LDFLAGS) $^
+	 $(LD) -o $@ $(LDFLAGS) $^ display.cpp
 #############################
 # uruchamianie plików 
 .PHONY: a b c d e
