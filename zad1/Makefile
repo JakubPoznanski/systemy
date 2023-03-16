@@ -52,6 +52,18 @@ $(EXEC4): $(OBJS4)
 $(EXEC5): $(OBJS5)
 	 $(LD) -o $@ $(LDFLAGS) $^
 #############################
+# uruchamianie plików 
+.PHONY: a b c d e
+a: $(EXEC1)
+	./$(EXEC1)
+b: $(EXEC2)
+	./$(EXEC2)
+c: $(EXEC3)
+	./$(EXEC3)
+d: $(EXEC4)
+	./$(EXEC4)
+e: $(EXEC5)
+	./$(EXEC5)
 .PHONY: clean tar
 # Porzadki
 EXECS = $(EXEC1) $(EXEC2) $(EXEC3) $(EXEC4) $(EXEC5)
