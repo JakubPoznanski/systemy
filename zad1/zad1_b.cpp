@@ -2,14 +2,11 @@
 #include <iostream>
 #include <unistd.h>
 #include <sys/wait.h>
-using namespace std;
+#include "display.h"
 int main()
 {
-	cout << "\nProces macierzysty" << endl;
-	cout << "UID:  " << getuid() << endl;
-	cout << "GID:  " << getgid() << endl;
-	cout << "PID:  " << getpid() << endl;
-	cout << "PPID: " << getppid() << endl;
+	std::cout << "Proces macierzysty" << std::endl;
+	display();
 	for (int i = 0; i < 3; i++)
 	{
 		switch (fork())
@@ -19,13 +16,13 @@ int main()
 			exit(1);
 
 		case 0:
-			cout << "\nUID:  " << getuid() << endl;
-			cout << "GID:  " << getgid() << endl;
-			cout << "PID:  " << getpid() << endl;
-			cout << "PPID: " << getppid() << endl;
+			// akcja dla procesu potomnego
+			display();
 			break;
 
 		default:
+			// akcja dla procesu macierzystego
+			// funkcja wait sprawi , że proces macierzysty poczeka na skończenie procesów potomnych
 			wait(NULL);
 		}
 	}
