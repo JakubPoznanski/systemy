@@ -2,17 +2,14 @@
 #include <iostream>
 #include <unistd.h>
 #include <sys/wait.h>
-using namespace std;
-
+#include "display.h"
 int main()
 {
+	// zapisanie ID procesu macierzystego
 	pid_t parentId = getpid();
-
-	cout << "\nProces macierzysty" << endl;
-	cout << "UID:  " << getuid() << endl;
-	cout << "GID:  " << getgid() << endl;
-	cout << "PID:  " << getpid() << endl;
-	cout << "PPID: " << getppid() << endl;
+	std::cout << "Proces macierzysty" << std::endl;
+	// wyświetlenie procesu macierzystego funkcją display
+	display();
 	for (int i = 0; i < 3; i++)
 	{
 		switch (fork())
@@ -21,21 +18,24 @@ int main()
 			perror("fork error");
 			exit(1);
 		case 0:
-			cout << "\nUID:  " << getuid() << endl;
-			cout << "GID:  " << getgid() << endl;
-			cout << "PID:  " << getpid() << endl;
-			cout << "PPID: " << getppid() << endl;
+			// akcja dla procesu potomnego
+			display();
 			break;
 
 		default:
+			// akcja dla procesu macierzystego, np. wywolanie funkcji wait
+			// w kazdej iteracji zaczeka sekundę to w zupełności wystarczy aby inne procesy go "wyprzedziły"
 			sleep(1);
 		}
 	}
+	// Jeżeli Id aktualnego procesu jest rowne id procesu macierzystego kończymy działanie programu
 	if (parentId == getpid())
 	{
 		return 0;
 	}
-	// Dzięki sleep 15 mamy czas na wpisanie komenty pstree
+	// Sleep(15) zadziala tylko na procesy potomne
+	// zatem kiedy proces macierzysty dobiegnie końca zostaną one adoptowane przez proces init
+	// widoczne w pliku pstree.png
 	sleep(15);
 	_exit(0);
 }
