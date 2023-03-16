@@ -14,7 +14,6 @@ int main()
         case -1:
             perror("fork error");
             exit(1);
-
         case 0:
             // funcja setgid()zostaje wywołana nawet gdy jest umieszczona w warunku if()
             if (setpgid(0, 0) == -1)
