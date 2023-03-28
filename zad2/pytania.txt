@@ -1,0 +1,19 @@
+//Jakub Poznanski
+
+switch (fork())
+{
+case -1:
+perror("fork error");
+exit(1);
+case 0: // proces potomny
+execlp("./nowy_program.x","nowy_program.x",(char *) NULL);
+perror("execlp error");
+_exit(2);
+default: // proces macierzysty
+};
+ 
+Ile procesów powstanie przy n-krotnym wywołanu funckji fork-exec jak wyżej?
+
+Przy n-krotnym wywołaniu funkcji postanie n-procesów potomych ponieważ,
+funkcja exec kończy aktualny proces i rozpoczyna nowy , który dotyczy innego pliku.
+W związku z tym przy kolejnej iteracji funkcja fork utworzy tylko jeden podproces.
