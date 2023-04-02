@@ -39,17 +39,16 @@ $(EXEC3): $(OBJS3)
 	 $(LD) -o $@ $(LDFLAGS) $^
 #############################
 # uruchamianie plików 
-.PHONY: a b c d e
+.PHONY: a b c 
 a: $(EXEC1)
 	./$(EXEC1)
 b: $(EXEC2)
 	./$(EXEC2)
 c: $(EXEC3)
 	./$(EXEC3)
-
 .PHONY: clean tar
 # Porzadki
-EXECS = $(EXEC1) $(EXEC2) $(EXEC3) $(EXEC4) $(EXEC5)
+EXECS = $(EXEC1) $(EXEC2) $(EXEC3)
 clean:                                                     
 	rm -f *.o  *~ $(EXECS)
 #=========================================================================
