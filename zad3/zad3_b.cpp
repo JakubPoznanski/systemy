@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
         perror("fork error");
         exit(1);
     case 0:
-        execlp("./zad3_a", "zad3_a", argv[1], NULL);
+        execlp("./zad3_a", "zad3_a", argv[1], argv[2], NULL);
         perror("execlp error");
     default:
         sleep(1);
@@ -35,9 +35,7 @@ int main(int argc, char *argv[])
         if (WIFSIGNALED(status))
         {
             int signalNumber = WTERMSIG(status);
-            std::cout << "Proces został zakończony przez sygnał nr:\n"
-                      << signalNumber << "\nRodzaj sygnału:\n"
-                      << strsignal(signalNumber) << std::endl;
+            std::cout << "Proces został zakończony przez sygnał:\nNumer: " << signalNumber << "\nRodzaj: " << strsignal(signalNumber) << std::endl;
             exit(0);
         }
     };
