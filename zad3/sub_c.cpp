@@ -26,8 +26,10 @@ int main(int argc, char *argv[])
             if (WIFSIGNALED(status))
             {
                 int signalNumber = WTERMSIG(status);
-                std::cout << "Proces został zakończony przez sygnał:\nNumer: " << signalNumber << "\nRodzaj: " << strsignal(signalNumber) << "\n"
-                          << std::endl;
+                signalNumber = atoi(argv[1]);
+                std::cout
+                    << "Proces został zakończony przez sygnał:\nNumer: " << signalNumber << "\nRodzaj: " << strsignal(signalNumber) << "\n"
+                    << std::endl;
                 break;
             }
             std::cout << "Proces zakończył działanie normalnie\n"
