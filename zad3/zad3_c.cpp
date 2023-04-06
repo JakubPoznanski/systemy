@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
             perror("kill error");
             exit(0);
         }
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
             sleep(1);
             if (kill(-pgid, signalNumber) == -1)

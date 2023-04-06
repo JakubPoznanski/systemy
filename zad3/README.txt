@@ -20,17 +20,31 @@ proces potomny został zakończony przez sygnał. WTERMSIG(status) podaje
 numer tego sygnału funkcja strsignal rodzaj.  
 _________________________________________________________________________
 
-(C)
+(C) Dwa programy - pierwszy tworzy jeden proces potomny i uruchamia w nim 
+drugi program, który ustawia ignorowanie sygnału, staje się liderem swojej
+grupy procesów, a następnie tworzy kilka procesów potomnych, które 
+uruchamiają program z podpunktu(A); pierwszy proces macierzysty,
+po krótkim czasie uśpienia (funkcja sleep()) wysyła sygnał do całej grupy 
+procesów; procesy macierzyste po utworzeniu wszystkich swoich procesów 
+potomnych powinny na nie poczekać (funkcja wait()).
 
 -----------------------Jak uruchomić programy?---------------------------
+Każdy z programó podczas uruchomienia przyjmuje 2 argumenty:
 
+argv1 - [int] rodzaj sygnału tabelka niżej
+argv2 - [int] reakcja na sygnał:
+        1-operacja domyślna
+        2-ignorowanie 
+        3-custom
 1.  
-    (A) make a - kompiluje oraz uruchamia program zad3_a
+    (A) make zad3_a kompilacja
+        ./zad3 arg1 arg2 - uruchomienie
     (B) make zad3_b kompilacja 
-        ./zad3_b numerSygnału np.1 -uruchomienie 
+        ./zad3_b arg1 arg2 -uruchomienie
         UWAGA program zad3_a musi być skompilowany aby B działał
-    (C)        
-
+    (C) make zad3_c kompilacja
+        make sub_c  kompilacja
+        ./zad3_c arg1 arg2 -uruchomienie
 
 2.polecenie "make clean" Usuwa wszystkie skompilowane pliki 
 

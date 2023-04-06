@@ -22,20 +22,20 @@ int main(int argc, char *argv[])
             break;
 
         default:
-            wait(&status);
-            if (WIFSIGNALED(status))
-            {
-                int signalNumber = WTERMSIG(status);
-                signalNumber = atoi(argv[1]);
-                std::cout
-                    << "Proces został zakończony przez sygnał:\nNumer: " << signalNumber << "\nRodzaj: " << strsignal(signalNumber) << "\n"
-                    << std::endl;
-                break;
-            }
+
             std::cout << "Proces zakończył działanie normalnie\n"
                       << std::endl;
             break;
         }
+    }
+    wait(&status);
+    if (WIFSIGNALED(status))
+    {
+        int signalNumber = WTERMSIG(status);
+        signalNumber = atoi(argv[1]);
+        std::cout
+            << "Proces został zakończony przez sygnał:\nNumer: " << signalNumber << "\nRodzaj: " << strsignal(signalNumber) << "\n"
+            << std::endl;
     }
     std::cout << "Drugi macierzysty PID:" << getpid() << "\n"
               << std::endl;
