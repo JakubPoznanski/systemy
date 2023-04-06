@@ -20,7 +20,6 @@ przez read() bajtów (zwracaną prze nią).
 1.kompilacja i uruchomienie 
         make run ARGS="in.txt out.txt"
 
-
 2.polecenie "make clean" Usuwa wszystkie skompilowane pliki 
 
 3.polecenie "make tar" służy do archiwizacji
