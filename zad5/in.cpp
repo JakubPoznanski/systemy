@@ -1,39 +1,35 @@
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 int main(int argc, char *argv[])
 {
-    int inFileDescriptor, mf, bytes;
-    int bytesForBuff = 3;
+    int inFileDescriptor, mfDescriptor, bytesread;
     char buffer[10];
-    char *inFileName = argv[1];
+    char *inFile = argv[1];
     char *myfifo = argv[2];
-    // otworzenie pliku wejściowego
-    inFileDescriptor = open(inFileName, O_RDONLY, 0666);
-    mf = open(myfifo, O_WRONLY);
+
+    inFileDescriptor = open(inFile, O_RDONLY, 0666);
+    mfDescriptor = open(myfifo, O_WRONLY);
     do
     {
-        // Odczyt bitów z pliku wejściowego i zapis w buforze
-        bytes = read(inFileDescriptor, &buffer, bytesForBuff);
-        // wpis z bufora do wejscia potoku
-        if (write(mf, &buffer, bytes) == -1)
+        bytesread = read(inFileDescriptor, &buffer, 5);
+        if (bytesread == -1)
+        {
+            perror("read error\n");
+            _exit(0);
+        };
+        write(STDOUT_FILENO, &buffer, bytesread);
+        if (-1 == write(mfDescriptor, &buffer, bytesread))
         {
             perror("write error\n");
-            exit(0);
+            _exit(0);
         }
-        // wpis bufora na standardowe wyjście
-        if (write(STDOUT_FILENO, &buffer, bytes) == -1)
-        {
-            perror("write error\n");
-            exit(0);
-        }
+    } while (bytesread == 5);
 
-    } while (bytes == bytesForBuff);
-    close(inFileDescriptor);
+    close(*inFile);
     _exit(0);
 }

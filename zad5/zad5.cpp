@@ -7,14 +7,12 @@
 #include <string.h>
 
 #define myfifo "/tmp/myfifo"
-// filedes[0] służy do czytania z potoku
-// filedes[1] służy do zapisywania do potoku.
 void removepipe(void)
 {
     if (remove(myfifo) != 0)
     {
         perror("Error deleting pipe file\n");
-        exit(EXIT_FAILURE);
+        exit(0);
     }
 };
 int main(int argc, char *argv[])
@@ -39,6 +37,7 @@ int main(int argc, char *argv[])
             perror("fork error");
             exit(1);
         case 0:
+            sleep(2);
             execlp("./out", "out", argv[2], myfifo, NULL);
             perror("execlp error\n");
         default:

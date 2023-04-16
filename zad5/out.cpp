@@ -1,44 +1,37 @@
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 int main(int argc, char *argv[])
 {
-    int outFileDescriptor, mf, bytes;
-    int bytesForBuff = 3;
+    int outFileDescriptor, mfDescriptor, bytesread;
     char buffer[10];
-    char *outFileName = argv[1];
+    char *outFile = argv[1];
     char *myfifo = argv[2];
-    // otworzenie pliku wejściowego
-    // otworzenie potoku chyba ?
-    outFileDescriptor = open(outFileName, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-    mf = open(myfifo, O_RDONLY);
+
+    outFileDescriptor = open(outFile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    mfDescriptor = open(myfifo, O_RDONLY);
     do
     {
-        // Odczyt bitów z pliku wejściowego i zapis w buforze
-        bytes = read(mf, &buffer, bytesForBuff);
-        // wpis z bufora do wejscia potoku
-        if (-1 == bytes)
+        bytesread = read(mfDescriptor, &buffer, 5);
+        if (-1 == bytesread)
         {
-            perror("read error 1\n");
-            _exit(EXIT_FAILURE);
+            perror("read error\n");
+            _exit(0);
         }
-        if (-1 == write(STDOUT_FILENO, buffer, bytes))
+        if (-1 == write(STDOUT_FILENO, &buffer, bytesread))
         {
             perror("write error\n");
-            _exit(EXIT_FAILURE);
+            _exit(0);
         }
-        if (-1 == write(outFileDescriptor, buffer, bytes))
+        if (-1 == write(outFileDescriptor, &buffer, bytesread))
         {
             perror("write error\n");
-            _exit(EXIT_FAILURE);
+            _exit(0);
         }
-
-    } while (bytes == bytesForBuff);
-    close(outFileDescriptor);
+    } while (bytesread == 5);
     _exit(0);
 }
