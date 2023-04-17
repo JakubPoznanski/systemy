@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
             perror("fork error");
             exit(1);
         case 0:
-            sleep(2);
             execlp("./out", "out", argv[2], myfifo, NULL);
             perror("execlp error\n");
         default:
