@@ -4,7 +4,7 @@
 #### zadanie 2 
 - modyfikacja programu zad1_a tak aby komunikaty procesów potomnych były wypisywane przez program uruchamiany przed funckję execlp.Nazwa programu do uruchomienia przekazywana jest jako argumenty programu macierzystego.
 
-#### Jak uruchomić program ?
+### Jak uruchomić program ?
 ```bash
 make run 
 ```
