@@ -7,6 +7,8 @@ FORKNUMBER = 3
 NUMBSECTION = 2
 FILE = numer.txt
 SEM = /sem
+SYNC = 1
+CROSS = 0
 
 EXEC1  = $(NAME1).x
 EXEC2  = $(NAME2).x
@@ -41,7 +43,7 @@ $(EXEC2): $(OBJS2) $(LIBS1)
 .PHONY: zad6
 
 zad6: $(EXEC1) $(EXEC2)
-	./$(EXEC1) $(EXEC2) $(FORKNUMBER) $(NUMBSECTION) $(FILE) $(SEM)
+	./$(EXEC1) $(EXEC2) $(FORKNUMBER) $(NUMBSECTION) $(FILE) $(SEM) $(SYNC) $(CROSS)
 
 .PHONY: clean tar
 

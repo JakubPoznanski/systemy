@@ -19,24 +19,26 @@ int main (int argc, char *argv[]) {
 	int file;
 	double max_dlugosc_czekania = 1.0;
 	//get data from argv
-
 	ilosc_sekcji_krytycznych = atoi(argv[1]);
-	semafor = otworz_semafor (argv[3]);
-
+	if(atoi(argv[4]))
+		semafor = otworz_semafor (argv[3]);
 
 	for (int i = 0; i < ilosc_sekcji_krytycznych; i++) {	
 		srand(time(NULL));
-		double time = (double)(rand() % (int)(max_dlugosc_czekania * 100)) / 100;
+		double time = (double)(rand() % (int)(max_dlugosc_czekania * 100+i)) / 100;
+		sleep(time);
 		printf("\n       Sleep(%.2f) przed wejściem w sekcję krytyczną\n",time);
 		printf("SEKCJA[%d]\n",i);
-		sleep(time);
 		
 		// opuść semafor - operacja P
-		semValue(semafor, &semvalue);
-		printf ("PID %d wartość SEM: %d\n", getpid(), semvalue);
-		semP(semafor);
-		semValue(semafor, &semvalue);
-		printf("Operacja P zajęcie SEM--\n");
+		if(atoi(argv[4]))
+		{
+			semValue(semafor, &semvalue);
+			printf ("PID %d wartość SEM: %d\n", getpid(), semvalue);
+			semP(semafor);
+			semValue(semafor, &semvalue);
+			printf("Operacja P zajęcie SEM--\n");
+		}
 		
 		/* Sekcja krytyczna */
 		
@@ -54,7 +56,8 @@ int main (int argc, char *argv[]) {
 			break;
 		} else {
 			bufor [readCheck] = '\0';
-			semValue(semafor, &semvalue);
+			if(atoi(argv[4]))
+				semValue(semafor, &semvalue);
 			sprintf (stringBuf, "PID %d wartość SEM: %d\nODCZYTANA LICZBA [%s]", getpid(), semvalue, bufor);
 			printf ("%s\n", stringBuf);
 		}
@@ -86,12 +89,12 @@ int main (int argc, char *argv[]) {
 			perror ("File close ERR");
 			exit (0);
 		}
-		
-		// podnieś semafor
+		if(atoi(argv[4])){
 			semV (semafor);
 			printf("Operacja V zwolnienie SEM++\n");
 			semValue(semafor, &semvalue);
 			printf ("PID %d wartość SEM: %d\n", getpid(),semvalue);
+		}
 	}
 	semClose(semafor);
 	

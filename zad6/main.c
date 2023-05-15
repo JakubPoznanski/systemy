@@ -56,27 +56,29 @@ int main (int argc, char *argv[]) {
 		perror ("Błąd zamknięcia pliku");
 		exit (0);
 	}
-	
+	if(atoi (argv[6])){
 	sem_t *semafor = stworz_semafor (nazwa_semafora);
 	int semvalue;
 	semValue(semafor, &semvalue);
 	printf ("Utworzono semafor %s (%p) o wartości %d\n", nazwa_semafora, (void *)semafor, semvalue);
-	
+	}
 	for (int i = 0; i < forkNumber; i++) {
 		switch (fork ()) {
 			case -1:
 				perror("fork error");
 				exit(0);
 			case 0:
-				execl ("increment.x", argv[1], argv[3], argv[4], argv[5], NULL);// uruchom inkrementator
+				execl ("increment.x", argv[1], argv[3], argv[4], argv[5],argv[6], NULL);// uruchom inkrementator
 				perror ("execl error");
 				exit(0);
 				
 				break;
 			default:
-				sleep(forkNumber);
-				break;
+				if(!atoi(argv[7]))
+					sleep(forkNumber);
+			break;
 		}
 	}
+	wait(0);
 	return 0;
 }
